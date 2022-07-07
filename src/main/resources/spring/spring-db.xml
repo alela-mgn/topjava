@@ -7,10 +7,7 @@
 
     <context:property-placeholder location="classpath:db/postgres.properties" system-properties-mode="OVERRIDE"/>
 
-    <jdbc:initialize-database data-source="dataSource" enabled="${database.init}">
-        <jdbc:script location="classpath:db/initDB.sql"/>
-        <jdbc:script location="classpath:db/populateDB.sql"/>
-    </jdbc:initialize-database>
+
     <!--no pooling-->
     <bean id="dataSource"
           class="org.springframework.jdbc.datasource.DriverManagerDataSource">
