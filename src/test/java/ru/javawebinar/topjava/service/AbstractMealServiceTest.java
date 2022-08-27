@@ -3,6 +3,7 @@ package ru.javawebinar.topjava.service;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.util.exception.NotFoundException;
 
@@ -44,6 +45,12 @@ abstract public class AbstractMealServiceTest extends AbstractServiceTest {
         newMeal.setId(newId);
         MEAL_MATCHER.assertMatch(created, newMeal);
         MEAL_MATCHER.assertMatch(mealService.get(newId, USER_ID), newMeal);
+    }
+
+    @Test
+    public void duplicateDateTimeCreate() {
+        assertThrows(DataAccessException.class, () ->
+                mealService.create(new Meal(null, meal1.getDateTime(), "duplicate", 100), USER_ID));
     }
 
     @Test
